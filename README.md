@@ -6,6 +6,8 @@ Maintain and search through a sorted array using some low level functions
 npm install sorted-array-functions
 ```
 
+[![build status](http://img.shields.io/travis/mafintosh/sorted-array-functions.svg?style=flat)](http://travis-ci.org/mafintosh/sorted-array-functions)
+
 ## Usage
 
 ``` js
