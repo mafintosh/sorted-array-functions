@@ -6,6 +6,7 @@ exports.lte = lte
 exports.lt = lt
 exports.gte = gte
 exports.gt = gt
+exports.indexOf = indexOf
 
 function defaultCmp (a, b) {
   if (a === b) return 0
