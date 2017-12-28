@@ -6,6 +6,7 @@ exports.lte = lte
 exports.lt = lt
 exports.gte = gte
 exports.gt = gt
+exports.nearest = nearest
 
 function defaultCmp (a, b) {
   if (a === b) return 0
@@ -87,6 +88,40 @@ function eq (list, value, cmp) {
   var i = indexOf(list, value, cmp)
   if (i === -1) return -1
   return cmp(list[i], value) === 0 ? i : -1
+}
+
+function nearest (list, value, cmp) {
+  if (!cmp) cmp = defaultCmp
+
+  var len = list.length
+  var top = len - 1
+  var btm = 0
+  var mid = -1
+  var trending = 1 // 0 = down, 2 = up
+
+  while (top >= btm && btm >= 0 && top < len) {
+    mid = Math.floor((top + btm) / 2)
+
+    var c = cmp(list[mid], value)
+    if (c === 0) return mid
+
+    if (c >= 0) {
+      if (trending === 1) trending = 0
+      else if (trending === 2) {
+        if (Math.abs(list[mid] - value) > Math.abs(list[mid - 1] - value)) return mid - 1
+        return mid
+      }
+
+      top = mid - 1
+    } else {
+      if (trending === 1) trending = 2
+      else if (trending === 0) return mid
+
+      btm = mid + 1
+    }
+  }
+
+  return mid
 }
 
 function indexOf (list, value, cmp) {
