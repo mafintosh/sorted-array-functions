@@ -1,6 +1,6 @@
 {
   "name": "sorted-array-functions",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Maintain and search through a sorted array using some low level functions",
   "main": "index.js",
   "dependencies": {},
