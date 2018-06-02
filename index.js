@@ -19,7 +19,7 @@ function add (list, value, cmp) {
   var top = list.push(value) - 1
 
   while (top) {
-    if (cmp(value, list[top - 1]) > 0) return
+    if (cmp(list[top - 1], value) < 0) return
     list[top] = list[top - 1]
     list[top - 1] = value
     top--
