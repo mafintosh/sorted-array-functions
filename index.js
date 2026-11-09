@@ -107,10 +107,11 @@ function nearest (list, value, cmp) {
   if (!cmp) cmp = defaultCmp
 
   var len = list.length
+  if (!len) return -1
+
   var top = len - 1
   var btm = 0
   var mid = -1
-  var trending = 1 // 0 = down, 2 = up
 
   while (top >= btm && btm >= 0 && top < len) {
     mid = Math.floor((top + btm) / 2)
@@ -119,21 +120,17 @@ function nearest (list, value, cmp) {
     if (c === 0) return mid
 
     if (c >= 0) {
-      if (trending === 1) trending = 0
-      else if (trending === 2) {
-        if (Math.abs(list[mid] - value) > Math.abs(list[mid - 1] - value)) return mid - 1
-        return mid
-      }
-
       top = mid - 1
     } else {
-      if (trending === 1) trending = 2
-      else if (trending === 0) return mid
-
       btm = mid + 1
     }
   }
 
+  if (btm === 0) return 0
+  if (btm === len) return len - 1
+
+  var other = mid === btm ? btm - 1 : btm
+  if (Math.abs(list[mid] - value) > Math.abs(list[other] - value)) return other
   return mid
 }
 
