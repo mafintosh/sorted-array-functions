@@ -375,7 +375,45 @@ tape('find nearest value', function (t) {
   t.end()
 })
 
+tape('nearest compares adjacent values after searching down', function (t) {
+  t.equal(sorted.nearest([0, 2, 5], 1.5), 1)
+  t.equal(sorted.nearest([-9, -4, 2], -5), 1)
+  t.equal(sorted.nearest([-1.5, 0.5, 4.5], 0), 1)
+
+  t.end()
+})
+
+tape('nearest retains closest values across nonadjacent probes', function (t) {
+  var duplicates = [-3, -3, 2, 2, 2]
+
+  t.equal(duplicates[sorted.nearest(duplicates, 0)], 2)
+  t.equal(sorted.nearest([0, 1, 2, 10, 11, 12], 4), 2)
+  t.equal(sorted.nearest([-12, -11, -10, -2, -1, 0], -8), 2)
+
+  t.end()
+})
+
+tape('nearest numeric ties and nearby choices', function (t) {
+  t.equal(sorted.nearest([0, 2, 5], 0.5), 0)
+  t.equal(sorted.nearest([0, 2, 5], 1), 0)
+  t.equal(sorted.nearest([0, 2, 4], 3), 2)
+  t.equal(sorted.nearest([0, 2, 5], 4), 2)
+
+  t.end()
+})
+
+tape('nearest numeric edges', function (t) {
+  t.equal(sorted.nearest([], 1.5), -1)
+  t.equal(sorted.nearest([2], 1.5), 0)
+  t.equal(sorted.nearest([0, 2, 5], 0), 0)
+  t.equal(sorted.nearest([0, 2, 5], 2), 1)
+  t.equal(sorted.nearest([0, 2, 5], 5), 2)
+  t.equal(sorted.nearest([0, 2, 5], -1), 0)
+  t.equal(sorted.nearest([0, 2, 5], 6), 2)
+
+  t.end()
+})
+
 function cmp (a, b) {
   return a.foo - b.foo
 }
-
